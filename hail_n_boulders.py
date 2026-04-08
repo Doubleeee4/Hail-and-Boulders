@@ -62,7 +62,7 @@ class HailNBoulders:
         self.boulder_spawn_chance = 120
         self.hail_active = []
         self.hail_spawn_chance = 30
-        self.special_event_chance = 10000
+        self.special_event_chance = 1000000
         self.boulder_pool = []
         self.hail_pool = []
         self.hail_speed = 6
@@ -111,17 +111,19 @@ class HailNBoulders:
     def check_level_up_all(self):
         global level_up_flag
         if level_up_flag:
-            for boulder in self.boulder_pool:
+            for boulder in chain(self.boulders_active, self.boulder_pool):
+                self.boulders_active = []
                 self.boulder_pool = []
                 boulder.hideturtle()
                 del boulder
-            for hail in self.hail_pool:
+            for hail in chain(self.hail_active, self.hail_pool):
+                self.hail_active = []
                 self.hail_pool = []
                 hail.hideturtle()
                 del hail
             self.hail_speed = int(round(self.hail_speed * 1.1))
             self.hail_spawn_chance = int(round(self.hail_spawn_chance * 0.9))
-            self.boulder_spawn_chance = int(round(self.boulder_spawn_chance * 0.83))
+            self.boulder_spawn_chance = int(round(self.boulder_spawn_chance * 0.85))
             self.special_event_chance = int(round(self.special_event_chance * 0.95))
             self.boulder_speed = int(round(self.boulder_speed * 1.1))
             level_up_flag = False
@@ -164,7 +166,6 @@ class HailNBoulders:
                 elif x == 7: boulder.goto((-900, -350))
                 else: print("range logic mistake in hail_n_boulders at line 106")
                 self.boulders_active.append(boulder)
-                print("special thing happened")
 
 
 

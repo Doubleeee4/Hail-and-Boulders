@@ -4,7 +4,6 @@ import hail_n_boulders
 import level_and_level_pb_and_scoreboard
 import math
 import time
-from itertools import chain
 
 screen = Screen()
 player = Player()
@@ -121,53 +120,9 @@ def game_loop():
     else:
         scoreboard.save_level_pb()
         scoreboard.game_over_text()
-        player_choice = screen.numinput("Game over!", "Type 1 to retry, type 2 to exit and type 0 to retry at level 5.", 1,0,2)
-        if player_choice == 2:
-            screen.bye()
-        if player_choice < 2:
-            for boulder in chain(obstacles.boulders_active, obstacles.boulder_pool):
-                boulder.ht()
-                del boulder
-            for hail in chain(obstacles.hail_active, obstacles.hail_pool):
-                hail.ht()
 
-            obstacles.boulders_active = []
-            obstacles.boulder_spawn_chance = 120
-            obstacles.hail_active = []
-            obstacles.hail_spawn_chance = 30
-            obstacles.special_event_chance = 1000000
-            obstacles.boulder_pool = []
-            obstacles.hail_pool = []
-            obstacles.hail_speed = 6
-            obstacles.boulder_speed = 5
-            obstacles.delay = 0
-            player.goto((0, -300))
-            scoreboard.clock_ = 0
-            scoreboard.level = 0
-            scoreboard.first_writing = True
-            scoreboard.rewrite_plus_level_update()
-            for k in keys:
-                keys[k] = False
-            screen.listen()
-            global pause_boolean
-            pause_boolean = False
-            screen.ontimer(game_loop, 16)
-            if player_choice == 0 and scoreboard.level_pb > 5:
-                for _ in range(1, 5):
-                    obstacles.hail_speed = int(round(obstacles.hail_speed * 1.1))
-                    obstacles.hail_spawn_chance = int(round(obstacles.hail_spawn_chance * 0.9))
-                    obstacles.boulder_spawn_chance = int(round(obstacles.boulder_spawn_chance * 0.83))
-                    obstacles.special_event_chance = int(round(obstacles.special_event_chance * 0.95))
-                    obstacles.boulder_speed = int(round(obstacles.boulder_speed * 1.1))
-                scoreboard.level = 5
-                scoreboard.clear()
-                scoreboard.goto(0, 350)
-                scoreboard.write(f"Level:{scoreboard.level} Personal best:{scoreboard.level_pb}", False, "center", scoreboard.font)
-                scoreboard.pu()
-                scoreboard.goto(-500, -190)
-                scoreboard.pd()
-                scoreboard.goto(500, -190)
-                scoreboard.pu()
+
 
 game_loop()
 screen.mainloop()
+screen.exitonclick()
