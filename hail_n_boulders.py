@@ -227,7 +227,6 @@ class HailNBoulders:
             self.boing_speed = round(self.boing_speed_unrounded)
             self.hail_speed = round(self.hail_speed_unrounded)
             level_up_flag = False
-            print(self.level_tracker, self.boulder_speed, self.boing_speed, self.hail_speed)
                 # Every level is 10% harder than the last
     def roll_hail_spawn_chance(self):
         if random.randint(1, self.hail_spawn_chance) == 2:
