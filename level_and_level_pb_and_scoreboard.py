@@ -44,4 +44,4 @@ class Text(Turtle):
             data.write(str(self.level_pb))
 
     def level_clock(self):
-        self.clock_ = round(self.clock_ + 0.001, 3)
+        self.clock_ = round(self.clock_ + 0.002, 3)
